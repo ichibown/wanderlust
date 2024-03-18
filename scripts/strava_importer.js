@@ -3,6 +3,9 @@ import { log } from 'console';
 import open from 'open'
 import readline from 'readline'
 import axios from 'axios';
+import stream from 'stream';
+import util from 'util';
+
 
 /**
  * Do Strava authentication, then return refresh token.
@@ -94,6 +97,25 @@ async function getActivities(accessToken) {
     }
   }
   return result;
+}
+
+/**
+ * Download activity FIT file and save to local.
+ * 
+ * @param {string} activityId 
+ * @param {string} cookie get from browser developer console.
+ */
+async function downloadActivity(activityId, cookie) {
+  const pipeline = util.promisify(stream.pipeline);
+  const url = `https://www.strava.com/activities/${activityId}/export_original`;
+  const response = await axios.get(url, {
+    responseType: 'stream',
+    headers: {
+      'Cookie': cookie,
+    },
+  });
+
+  await pipeline(response.data, fs.createWriteStream(`${activityId}.fit`));
 }
 
 async function main() {
