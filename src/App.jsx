@@ -14,10 +14,9 @@ function App() {
         longitude: -122.4,
         zoom: 14
       }}
-      style={{ width: '100vw', height: '100vw' }}
+      style={{ width: '100vw', height: '100vh' }}
       mapStyle={MAPBOX_STYLE}
-      mapboxAccessToken={MAPBOX_TOKEN}
-    >
+      mapboxAccessToken={MAPBOX_TOKEN}>
       <Marker longitude={-122.4} latitude={37.8} color="red" />
     </Map>
   );
