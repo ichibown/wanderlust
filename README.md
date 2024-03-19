@@ -6,8 +6,8 @@ Explore the world on foot.
 TODOs
 - Backend
     - Data Sync
-        - [ ] CF D1: Database tables design.
-        - [ ] CF D1 / R2: Fetch from Strava and import to D1.
+        - [x] CF D1: Database tables design.
+        - [x] CF D1 / R2: Fetch from Strava and import to D1.
           1. Strava API: auth & token.
           2. Strava API: get all activities.
           3. Wrangler CLI: calclualte fields, generate .sql file, import .sql to D1.
