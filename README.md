@@ -11,17 +11,20 @@ TODOs
           1. Strava API: auth & token.
           2. Strava API: get all activities.
           3. Wrangler CLI: calclualte fields, generate .sql file, import .sql to D1.
-        - [ ] CF Worker: Strava activity webhook to D1 (or cron pull).
-        - [ ] CF R2: Backup Strava .fit files to R2. (Later)
     - API
+        - [ ] CF Pages Function: /strava/auth
+        - [ ] CF Pages Function: /strava/token
+        - [ ] CF Pages Function: /strava/sync
         - [ ] CF Pages Function: /home
+        - [ ] CF Pages Function: /config
         - [ ] CF pages Function: /query
-        - [ ] CF pages Function: /webhook (auth and import)
 - Frontend
     - Project
         - [x] Init: React + Tailwind + ReactMapGL
-    - Components
+    - Components / Pages
         - [ ] Map: Routes + Heatmap + Animating Route + Markers.
+        - [ ] Config: Auth + Sync + Config Editor.
+        - [ ] Dashboard: Custom query.
         - [ ] Dashboard: User info.
         - [ ] Dashboard: Summary data chart.
         - [ ] Dashboard: Recent activites.
@@ -30,9 +33,6 @@ TODOs
         - [ ] Dashboard: Anaerobic analytics.
         - [ ] Dashboard: Custom query.
         - [ ] Detail: Detail info page. (Depends on .fit file from R2)
-    - App
-        - [ ] API Requests.
-        - [ ] Data binding to components.
     - Others
         - [ ] I18N.
         - [ ] Dark Mode.
