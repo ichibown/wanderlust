@@ -12,8 +12,7 @@ TODOs
           2. Strava API: get all activities.
           3. Wrangler CLI: calclualte fields, generate .sql file, import .sql to D1.
     - API
-        - [ ] CF Pages Function: /strava/auth
-        - [ ] CF Pages Function: /strava/token
+        - [x] CF Pages Function: /strava/auth
         - [ ] CF Pages Function: /strava/sync
         - [ ] CF Pages Function: /home
         - [ ] CF Pages Function: /config
