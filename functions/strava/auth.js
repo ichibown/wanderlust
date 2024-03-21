@@ -41,7 +41,7 @@ async function handleStravaInit(db, clientId, clientSecret) {
     clientId: clientId,
     clientSecret: clientSecret
   })
-  db.batch([
+  await db.batch([
     db.prepare(sqlCreateConfigTable),
     db.prepare(sqlDeleteStravaConfig),
     db.prepare(sqlCreateStravaConfig).bind(configJson),
