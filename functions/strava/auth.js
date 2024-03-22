@@ -15,17 +15,24 @@ function getRedirectUrl(clientId, baseUrl) {
  * @returns 
  */
 export async function onRequestPost(context) {
-  const body = await context.request.json();
+  let body;
+  try {
+    body = await context.request.json();
+  } catch (err) {
+    return new Response('Failed to parse request body.', {
+      status: 400
+    });
+  }
   if (!body.clientId || !body.clientSecret) {
     return new Response("Missing params: clientId, clientSecret.", {
       status: 400
     });
   }
   await context.env.KV.put('config:strava', JSON.stringify({
-    clientId: clientId,
-    clientSecret: clientSecret
+    clientId: body.clientId,
+    clientSecret: body.clientSecret
   }));
-  return Response.redirect(getRedirectUrl(clientId, baseUrl), 301);
+  return Response.redirect(getRedirectUrl(body.clientId, context.env.BASE_URL), 301);
 }
 
 /**
