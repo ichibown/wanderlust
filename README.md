@@ -13,9 +13,9 @@ TODOs
           3. Wrangler CLI: calclualte fields, generate .sql file, import .sql to D1.
     - API
         - [x] CF Pages Function: /strava/auth
-        - [ ] CF Pages Function: /strava/sync
-        - [ ] CF Pages Function: /home
+        - [x] CF Pages Function: /strava/sync
         - [ ] CF Pages Function: /config
+        - [ ] CF Pages Function: /home
         - [ ] CF pages Function: /query
 - Frontend
     - Project
@@ -39,4 +39,4 @@ TODOs
         - [ ] PWA.
 - Deployment
     - Serverless
-        - [ ] CF Pages & Workers.
+        - [x] CF Pages & Workers.
