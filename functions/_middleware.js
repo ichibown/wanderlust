@@ -5,7 +5,7 @@ const postPathsToAuth = [
 ];
 
 function authentication(context) {
-  const path = new Url(context.request.url).pathname;
+  const path = new URL(context.request.url).pathname;
   if (context.request.method === "POST" && postPathsToAuth.includes(path)) {
     if (context.request.headers.get("x-password") != context.env.PASSWORD) {
       return new Response("Unauthorized", { status: 403 });
