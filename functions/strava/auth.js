@@ -28,17 +28,17 @@ export async function onRequestGet(context) {
 }
 
 async function handleStravaInit(kv, clientId, clientSecret) {
-  const configJson = JSON.stringify({
+  const configText = JSON.stringify({
     clientId: clientId,
     clientSecret: clientSecret
   })
-  await kv.put('config:strava', configJson)
+  await kv.put('config:strava', configText)
   return Response.redirect(redirectUrlPrefix + clientId + redirectUriSuffix, 301);
 }
 
 async function handleStravaAuth(kv, code) {
-  const stravaConfig = await kv.get('config:strava')
-  if (stravaConfig === null) {
+  const configJson = await kv.get('config:strava', { type: 'json' })
+  if (configJson === null) {
     return new Response('Strava config not found', {
       status: 404
     })
@@ -47,16 +47,16 @@ async function handleStravaAuth(kv, code) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      client_id: stravaConfig.clientId,
-      client_secret: stravaConfig.clientSecret,
+      client_id: configJson.clientId,
+      client_secret: configJson.clientSecret,
       code: code,
       grant_type: 'authorization_code'
     })
   })
   const data = await resp.json()
   await kv.put('config:strava', JSON.stringify({
-    clientId: stravaConfig.clientId,
-    clientSecret: stravaConfig.clientSecret,
+    clientId: configJson.clientId,
+    clientSecret: configJson.clientSecret,
     refreshToken: data.refresh_token,
   }))
   return new Response('Strava auth success')
