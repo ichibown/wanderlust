@@ -18,7 +18,7 @@ export async function onRequestGet(context) {
     })
   }
   const activitiesMap = await getActivitiesMap(kv)
-  const rawActivities = await fetchStravaActivities(accessToken, activitiesMap.length === 0)
+  const rawActivities = await fetchStravaActivities(accessToken, activitiesMap.size === 0)
   const newActivitiesCount = await mergeAndSaveActivities(kv, activitiesMap, rawActivities)
   return new Response(`Synced ${newActivitiesCount} new activities.`)
 }
