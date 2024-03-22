@@ -36,21 +36,18 @@ async function fetchStravaActivities(accessToken, isInitial) {
         'Authorization': `Bearer ${accessToken}`,
       },
     });
-    if (resp.ok) {
-      const data = await resp.json()
-      console.log(`Got ${data.length} activities on page ${page}`)
-      result.push(...data)
-    } else {
+    if (!resp.ok) {
       console.log(`Fetch activities error: ${resp.status}`)
-      break
+      break;
     }
+    const data = await resp.json()
+    console.log(`Got ${data.length} activities on page ${page}`)
+    result.push(...data)
     if (!isInitial) {
       break
     }
-    if (resp.data.length === perPage) {
+    if (data.length === perPage) {
       page++
-    } else {
-      break
     }
   }
   return result
