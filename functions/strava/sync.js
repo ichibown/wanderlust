@@ -48,6 +48,8 @@ async function fetchStravaActivities(accessToken, isInitial) {
     }
     if (data.length === perPage) {
       page++
+    } else {
+      break;
     }
   }
   return result
