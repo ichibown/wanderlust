@@ -1,8 +1,12 @@
 import ActivityMap from "./components/ActivityMap";
+import { MainContainer } from "./components/MainContainer";
 
 function App() {
   return (
-    <ActivityMap />
+    <div>
+      <ActivityMap />
+      <MainContainer />
+    </div>
   );
 }
 
