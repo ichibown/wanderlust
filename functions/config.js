@@ -1,7 +1,7 @@
 const defaultConfig = {
   name: 'Wanderluster',
   motto: 'Better to run than curse the road.',
-  avatar: '/assets/avatar_default.jpg',
+  avatar: '/avatar.jpg',
 };
 
 export async function onRequestGet(context) {
