@@ -8,14 +8,14 @@ import { useState } from 'react';
 
 const FloatingCard = styled(Card)(({ isExpanded }) => ({
   position: 'absolute',
-  top: isExpanded ? '50%' : '10%',
-  left: isExpanded ? '50%' : '10%',
-  transform: isExpanded ? 'translate(-50%, -50%)' : 'none',
-  width: isExpanded ? '80%' : '100px',
-  height: isExpanded ? '80%' : '100px',
+  top: isExpanded ? '50%' : '15%',
+  left: isExpanded ? '50%' : '50%',
+  transform: 'translate(-50%, -50%)',
+  width: isExpanded ? '66%' : '420px',
+  height: isExpanded ? '80%' : '70px',
   zIndex: 1,
-  opacity: 0.8,
-  transition: 'width 0.3s, height 0.3s, top 0.3s, left 0.3s, transform 0.3s',
+  opacity: isExpanded ? 0.8 : 0.3,
+  transition: 'width 0.3s, height 0.3s, top 0.3s, left 0.3s, transform 0.3s, opacity 0.3s',
 }));
 
 export function MainContainer() {
@@ -27,9 +27,16 @@ export function MainContainer() {
 
   return (
     <FloatingCard isExpanded={isExpanded}>
-      <Box padding={2}>
+      <Box onClick={handleAvatarClick} >
         <CardContent>
-          <Avatar alt="Avatar" src="https://brown-1300926339.cos.ap-beijing.myqcloud.com/uPic/2024-01-12-WechatIMG490-yqBXoR.jpg" onClick={handleAvatarClick} />
+          <Avatar
+            alt="Avatar"
+            src="https://brown-1300926339.cos.ap-beijing.myqcloud.com/uPic/2024-01-12-WechatIMG490-yqBXoR.jpg"
+            sx={{
+              width: isExpanded ? '72px' : '36px',
+              height: isExpanded ? '72px' : '36px',
+              transition: 'width 0.3s, height 0.3s',
+            }} />
         </CardContent>
       </Box>
     </FloatingCard>
