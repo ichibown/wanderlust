@@ -5,16 +5,13 @@ Explore the world on foot.
 
 TODOs
 - Backend
-    - Data Sync
+    - Data
         - [x] ~~CF D1: Database tables design.~~ Use KV instead.
         - [x] ~~CF D1 / R2: Fetch from Strava and import to D1.~~ Use KV instead.
-          1. Strava API: auth & token.
-          2. Strava API: get all activities.
-          3. Wrangler CLI: calclualte fields, generate .sql file, import .sql to D1.
     - API
         - [x] CF Pages Function: /strava/auth
         - [x] CF Pages Function: /strava/sync
-        - [ ] CF Pages Function: /config
+        - [x] CF Pages Function: /config
         - [ ] CF Pages Function: /home
         - [ ] CF pages Function: /query
 - Frontend
@@ -32,11 +29,13 @@ TODOs
         - [ ] Dashboard: Anaerobic analytics.
         - [ ] Dashboard: Custom query.
         - [ ] Detail: Detail info page. (Depends on .fit file from R2)
-    - Others
+    - Nice To Have
+        - [ ] Configurable dashboard card templates.
         - [ ] I18N.
         - [ ] Dark Mode.
         - [ ] Privacy mode.
         - [ ] PWA.
+        - [ ] AIGC (training performance evaluation?).
 - Deployment
     - Serverless
-        - [x] CF Pages & Workers.
+        - [x] CF Pages & Functions & Workers.
