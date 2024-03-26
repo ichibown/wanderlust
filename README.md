@@ -30,6 +30,7 @@ TODOs
         - [ ] Dashboard: Custom query.
         - [ ] Detail: Detail info page. (Depends on .fit file from R2)
     - Nice To Have
+        - [ ] Performace Opt: cache-control, create geojson in R2, etc.
         - [ ] Configurable dashboard card templates.
         - [ ] I18N.
         - [ ] Dark Mode.
