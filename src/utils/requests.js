@@ -29,8 +29,7 @@ export function postStravaSync(password, onResult) {
       'Content-Type': 'application/json',
       'x-password': password,
     },
-  })
-    .then(response => response.text().then(text => onResult(text)));
+  }).then(response => response.text().then(text => onResult(text)));
 }
 
 export function postUserConfig(avatar, name, motto, password, onResult) {
@@ -50,6 +49,5 @@ export function postUserConfig(avatar, name, motto, password, onResult) {
 
 
 export function getHomeData(onResult) {
-  return fetch('/home')
-    .then(response => response.json().then(json => onResult(json)));
+  return fetch('/home').then(response => response.json().then(json => onResult(json)));
 }

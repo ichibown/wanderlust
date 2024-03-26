@@ -49,6 +49,7 @@ const ConfigDialog = ({ open, setOpen }) => {
       setResultMessage(message);
       homeDataState.refreshHomeData();
     });
+    setOpen(false);
   };
   return (
     <React.Fragment>
