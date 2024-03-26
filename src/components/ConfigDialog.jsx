@@ -9,8 +9,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
+import Link from '@mui/material/Link';
 import { HomeDataContext } from '../App';
 import { postUserConfig, postStravaAuth, postStravaSync } from '../utils/requests';
+import { DialogContentText } from '@mui/material';
 
 const ConfigDialog = ({ open, setOpen }) => {
   const [isStravaConfig, setStravaConfig] = React.useState(false);
@@ -28,6 +30,14 @@ const ConfigDialog = ({ open, setOpen }) => {
   const handleRequest = (data) => {
     setLoading(true);
     if (isStravaConfig) {
+      if (data.clientId === '' || data.clientSecret === '') {
+        postStravaSync(userInfo.password, (message) => {
+          setLoading(false);
+          setResultMessage(message);
+          homeDataState.refreshHomeData();
+        });
+        return;
+      }
       postStravaAuth(data.clientId, data.clientSecret, data.password, (message) => {
         setLoading(false);
         setResultMessage(message);
@@ -42,20 +52,12 @@ const ConfigDialog = ({ open, setOpen }) => {
     }
     setOpen(false);
   };
-  const handleSync = () => {
-    setLoading(true);
-    postStravaSync(userInfo.password, (message) => {
-      setLoading(false);
-      setResultMessage(message);
-      homeDataState.refreshHomeData();
-    });
-    setOpen(false);
-  };
   return (
     <React.Fragment>
       <Dialog
         open={open}
         onClose={handleDialogClose}
+        scroll='body'
         PaperProps={{
           component: 'form',
           onSubmit: (event) => {
@@ -68,13 +70,14 @@ const ConfigDialog = ({ open, setOpen }) => {
         <DialogTitle>
           {isStravaConfig ? 'Strava Binding Config' : 'User Information Config'}
         </DialogTitle>
-        {isStravaConfig ? <StravaConfigContent /> : <UserInfoConfigContent userInfo={userInfo} />}
+        {isStravaConfig ? <StravaConfigContent hasStrava={hasStrava} /> : <UserInfoConfigContent userInfo={userInfo} />}
         <DialogActions>
           <Button onClick={handleSwitch}>
             {isStravaConfig ? 'User Config' : 'Strava Config'}
           </Button>
-          {isStravaConfig && hasStrava ? <Button onClick={handleSync}>Sync</Button> : null}
-          <Button type="submit">Update</Button>
+          <Button type="submit">
+            {isStravaConfig ? (hasStrava ? 'Update or Sync' : 'Bind') : 'Save'}
+          </Button>
         </DialogActions>
       </Dialog>
       <Backdrop
@@ -144,11 +147,16 @@ const UserInfoConfigContent = ({ userInfo }) => {
   )
 }
 
-const StravaConfigContent = () => {
+const StravaConfigContent = ({ hasStrava }) => {
   return (
     <DialogContent>
-      <TextField autoFocus
-        required
+      <DialogContentText>
+        {hasStrava ?
+          <p>Strava configured, leave Client ID and Client Secret empty will trigger data sync.</p> :
+          <p>Strava not configured, go to <Link href="https://www.strava.com/settings/api" target='_blank'>Strava Settings</Link> for Client ID and Client Secret.</p>}
+      </DialogContentText>
+      <TextField
+        autoFocus
         id="clientId"
         name="clientId"
         label="Client ID"
@@ -159,7 +167,6 @@ const StravaConfigContent = () => {
       />
       <TextField
         autoFocus
-        required
         id="clientSecret"
         name="clientSecret"
         label="Client Secret"
@@ -170,7 +177,6 @@ const StravaConfigContent = () => {
       />
       <TextField
         autoFocus
-        required
         id="password"
         name="password"
         label="Password"
