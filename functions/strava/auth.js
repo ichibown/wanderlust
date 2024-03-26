@@ -32,7 +32,7 @@ export async function onRequestPost(context) {
     clientId: body.clientId,
     clientSecret: body.clientSecret
   }));
-  return Response.redirect(getRedirectUrl(body.clientId, context.env.BASE_URL), 301);
+  return Response.json({ redirectUrl: getRedirectUrl(body.clientId, context.env.BASE_URL) });
 }
 
 /**
@@ -78,5 +78,5 @@ export async function onRequestGet(context) {
     clientSecret: configJson.clientSecret,
     refreshToken: data.refresh_token,
   }));
-  return new Response('Strava auth success.');
+  return Response.redirect(context.env.BASE_URL, 303);
 }

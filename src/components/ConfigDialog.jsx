@@ -147,7 +147,7 @@ const StravaConfigContent = () => {
   return (
     <DialogContent>
       <TextField autoFocus
-        equired
+        required
         id="clientId"
         name="clientId"
         label="Client ID"
@@ -158,7 +158,7 @@ const StravaConfigContent = () => {
       />
       <TextField
         autoFocus
-        equired
+        required
         id="clientSecret"
         name="clientSecret"
         label="Client Secret"
