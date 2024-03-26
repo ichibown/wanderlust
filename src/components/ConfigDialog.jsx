@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,12 +9,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
+import { HomeDataContext } from '../App';
 import { postUserConfig, postStravaAuth, postStravaSync } from '../utils/requests';
 
-const ConfigDialog = ({ userInfo, hasStrava, open, setOpen }) => {
+const ConfigDialog = ({ open, setOpen }) => {
   const [isStravaConfig, setStravaConfig] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   const [resultMessage, setResultMessage] = React.useState('');
+  const homeDataState = useContext(HomeDataContext);
+  const userInfo = homeDataState.homeData.userInfo || {};
+  const hasStrava = homeDataState.homeData.hasStrava;
   const handleDialogClose = () => {
     setOpen(false);
   };
@@ -26,11 +31,13 @@ const ConfigDialog = ({ userInfo, hasStrava, open, setOpen }) => {
       postStravaAuth(data.clientId, data.clientSecret, data.password, (message) => {
         setLoading(false);
         setResultMessage(message);
+        homeDataState.refreshHomeData();
       });
     } else {
       postUserConfig(data.avatar, data.name, data.motto, data.password, (message) => {
         setLoading(false);
         setResultMessage(message);
+        homeDataState.refreshHomeData();
       });
     }
     setOpen(false);
@@ -40,6 +47,7 @@ const ConfigDialog = ({ userInfo, hasStrava, open, setOpen }) => {
     postStravaSync(userInfo.password, (message) => {
       setLoading(false);
       setResultMessage(message);
+      homeDataState.refreshHomeData();
     });
   };
   return (

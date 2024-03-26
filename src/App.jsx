@@ -15,12 +15,15 @@ function App() {
   const handleIconClick = () => {
     setExpand(!isExpanded);
   }
-  useEffect(() => {
+  const refreshHomeData = () => {
     getHomeData((data) => { setHomeData(data); });
+  }
+  useEffect(() => {
+    refreshHomeData();
   }, []);
   return (
     <ExpandContext.Provider value={{ isExpanded, setExpand }}>
-      <HomeDataContext.Provider value={{ homeData }}>
+      <HomeDataContext.Provider value={{ homeData, refreshHomeData }}>
         <WorldMap />
         <DashboardContaienr>
           <Box
