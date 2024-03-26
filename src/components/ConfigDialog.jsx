@@ -36,13 +36,13 @@ const ConfigDialog = ({ open, setOpen }) => {
           setResultMessage(message);
           homeDataState.refreshHomeData();
         });
-        return;
+      } else {
+        postStravaAuth(data.clientId, data.clientSecret, data.password, (message) => {
+          setLoading(false);
+          setResultMessage(message);
+          homeDataState.refreshHomeData();
+        });
       }
-      postStravaAuth(data.clientId, data.clientSecret, data.password, (message) => {
-        setLoading(false);
-        setResultMessage(message);
-        homeDataState.refreshHomeData();
-      });
     } else {
       postUserConfig(data.avatar, data.name, data.motto, data.password, (message) => {
         setLoading(false);
