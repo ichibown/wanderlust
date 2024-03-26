@@ -10,7 +10,14 @@ export function postStravaAuth(clientId, clientSecret, password, onResult) {
       clientSecret: clientSecret,
     }),
   })
-    .then(response => response.text().then(text => onResult(text)));
+    .then(response => {
+      if (response.status === 301) {
+        // Redirect to Strava OAuth
+        window.location = response.headers.get('Location');
+      } else {
+        return response.text().then(text => onResult(text));
+      }
+    });
 }
 
 export function postStravaSync(password, onResult) {
