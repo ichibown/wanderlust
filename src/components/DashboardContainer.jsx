@@ -1,12 +1,10 @@
 import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import { ExpandContext } from '../App';
+import { Card } from '@mui/material';
 
 export function DashboardContainer({ children }) {
   const expandState = useContext(ExpandContext);
-  const handleContainerClick = () => {
-    expandState.setExpand(!expandState.isExpanded);
-  };
   return (
     <Box sx={{
       position: 'absolute',
@@ -21,9 +19,9 @@ export function DashboardContainer({ children }) {
       opacity: expandState.isExpanded ? 0.8 : 0.5,
       transition: 'opacity 0.3s',
     }} >
-      <Box sx={{ pointerEvents: 'auto' }} onClick={handleContainerClick}>
+      <Card sx={{ pointerEvents: 'auto' }}>
         {children}
-      </Box>
+      </Card>
     </Box>
   );
 }

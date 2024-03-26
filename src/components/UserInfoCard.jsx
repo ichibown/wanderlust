@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import ConfigDialog from './ConfigDialog';
 import { ExpandContext } from '../App';
 
 const UserTextContent = ({ name, motto, fontSize, center }) => {
@@ -36,23 +37,13 @@ const UserTextContent = ({ name, motto, fontSize, center }) => {
   );
 }
 
-const UserAvatarContent = ({ avatar, isExpanded }) => {
-  return (
-    <Avatar
-      alt="avatar"
-      src={avatar}
-      sx={{
-        width: isExpanded ? '72px' : '32px',
-        height: isExpanded ? '72px' : '32px',
-        margin: isExpanded ? '8px 0 8px 72px' : '0',
-        transition: 'width 0.3s, height 0.3s, margin 0.3s',
-      }} />
-  );
-}
-
 const UserInfoCard = ({ userInfo }) => {
   const expandState = useContext(ExpandContext);
   const isExpanded = expandState.isExpanded;
+  const [configOpen, setConfigOpen] = React.useState(false);
+  const handleAvatarClick = () => {
+    setConfigOpen(!configOpen);
+  }
   return (
     <Box sx={{
       padding: '12px',
@@ -65,14 +56,22 @@ const UserInfoCard = ({ userInfo }) => {
         flexDirection: 'row',
         alignItems: 'center',
       }}>
-        <Box sx={{
-          maxWidth: '280px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
-          <UserAvatarContent
-            avatar={userInfo.avatar}
-            isExpanded={isExpanded} />
+        <Box
+          sx={{
+            maxWidth: '280px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+          <Avatar
+            alt="avatar"
+            src={userInfo.avatar}
+            onDoubleClick={handleAvatarClick}
+            sx={{
+              width: isExpanded ? '72px' : '32px',
+              height: isExpanded ? '72px' : '32px',
+              margin: isExpanded ? '8px 0 8px 72px' : '0',
+              transition: 'width 0.3s, height 0.3s, margin 0.3s',
+            }} />
           <UserTextContent
             name={userInfo.name}
             motto={userInfo.motto}
@@ -85,6 +84,10 @@ const UserInfoCard = ({ userInfo }) => {
           fontSize={isExpanded ? 0 : 14}
           center={false} />
       </Box>
+      <ConfigDialog
+        userInfo={userInfo}
+        open={configOpen}
+        setOpen={setConfigOpen} />
     </Box>
   );
 };
