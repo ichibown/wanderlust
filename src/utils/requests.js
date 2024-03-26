@@ -1,4 +1,4 @@
-export function postStravaAuth(clientId, clientSecret, password) {
+export function postStravaAuth(clientId, clientSecret, password, onResult) {
   return fetch('/strava/auth', {
     method: 'POST',
     headers: {
@@ -9,12 +9,19 @@ export function postStravaAuth(clientId, clientSecret, password) {
       clientId: clientId,
       clientSecret: clientSecret,
     }),
-  }).then(response => {
-    if (!response.ok) {
-      throw new Error('Failed to post strava auth code');
-    }
-    return response.json();
-  });
+  })
+    .then(response => response.text().then(text => onResult(text)));
+}
+
+export function postStravaSync(password, onResult) {
+  return fetch('/strava/sync', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-password': password,
+    },
+  })
+    .then(response => response.text().then(text => onResult(text)));
 }
 
 export function postUserConfig(avatar, name, motto, password, onResult) {
@@ -29,7 +36,11 @@ export function postUserConfig(avatar, name, motto, password, onResult) {
       name: name,
       motto: motto,
     }),
-  }).then(response => {
-    onResult(response.ok);
-  });
+  }).then(response => response.text().then(text => onResult(text)));
+}
+
+
+export function getHomeData(onResult) {
+  return fetch('/home')
+    .then(response => response.json().then(json => onResult(json)));
 }

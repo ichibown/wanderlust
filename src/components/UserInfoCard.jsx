@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import ConfigDialog from './ConfigDialog';
-import { ExpandContext } from '../App';
+import { ExpandContext, HomeDataContext } from '../App';
 
 const UserTextContent = ({ name, motto, fontSize, center }) => {
   const isExpanded = fontSize > 0;
@@ -37,8 +37,10 @@ const UserTextContent = ({ name, motto, fontSize, center }) => {
   );
 }
 
-const UserInfoCard = ({ userInfo }) => {
+const UserInfoCard = () => {
   const expandState = useContext(ExpandContext);
+  const homeDataState = useContext(HomeDataContext);
+  const userInfo = homeDataState.homeData.userInfo || {};
   const isExpanded = expandState.isExpanded;
   const [configOpen, setConfigOpen] = React.useState(false);
   const handleAvatarClick = () => {
@@ -64,7 +66,7 @@ const UserInfoCard = ({ userInfo }) => {
           }}>
           <Avatar
             alt="avatar"
-            src={userInfo.avatar}
+            src={userInfo.avatar || '/avatar.jpg'}
             onDoubleClick={handleAvatarClick}
             sx={{
               width: isExpanded ? '72px' : '32px',
@@ -73,20 +75,21 @@ const UserInfoCard = ({ userInfo }) => {
               transition: 'width 0.3s, height 0.3s, margin 0.3s',
             }} />
           <UserTextContent
-            name={userInfo.name}
-            motto={userInfo.motto}
+            name={userInfo.name || 'Anonymous'}
+            motto={userInfo.motto || 'None'}
             fontSize={isExpanded ? 20 : 0}
             center={true} />
         </Box>
         <UserTextContent
-          name={userInfo.name}
-          motto={userInfo.motto}
+          name={userInfo.name || 'Anonymous'}
+          motto={userInfo.motto || 'None'}
           fontSize={isExpanded ? 0 : 14}
           center={false} />
       </Box>
       <ConfigDialog
         userInfo={userInfo}
         open={configOpen}
+        hasStrava={homeDataState.homeData.hasStrava}
         setOpen={setConfigOpen} />
     </Box>
   );

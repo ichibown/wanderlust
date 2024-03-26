@@ -5,43 +5,81 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import { postUserConfig, postStravaAuth, postStravaSync } from '../utils/requests';
 
-const ConfigDialog = ({ userInfo, open, setOpen }) => {
+const ConfigDialog = ({ userInfo, hasStrava, open, setOpen }) => {
   const [isStravaConfig, setStravaConfig] = React.useState(false);
-  const handleClose = () => {
+  const [isLoading, setLoading] = React.useState(false);
+  const [resultMessage, setResultMessage] = React.useState('');
+  const handleDialogClose = () => {
     setOpen(false);
   };
   const handleSwitch = () => {
     setStravaConfig(!isStravaConfig);
   };
+  const handleRequest = (data) => {
+    setLoading(true);
+    if (isStravaConfig) {
+      postStravaAuth(data.clientId, data.clientSecret, data.password, (message) => {
+        setLoading(false);
+        setResultMessage(message);
+      });
+    } else {
+      postUserConfig(data.avatar, data.name, data.motto, data.password, (message) => {
+        setLoading(false);
+        setResultMessage(message);
+      });
+    }
+    setOpen(false);
+  };
+  const handleSync = () => {
+    setLoading(true);
+    postStravaSync(userInfo.password, (message) => {
+      setLoading(false);
+      setResultMessage(message);
+    });
+  };
   return (
     <React.Fragment>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={handleDialogClose}
         PaperProps={{
           component: 'form',
           onSubmit: (event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
+            handleRequest(formJson);
           },
-        }}
-      >
+        }}>
         <DialogTitle>
-          {isStravaConfig ? 'Strava Authentication Config' : 'User Information Config'}
+          {isStravaConfig ? 'Strava Binding Config' : 'User Information Config'}
         </DialogTitle>
         {isStravaConfig ? <StravaConfigContent /> : <UserInfoConfigContent userInfo={userInfo} />}
         <DialogActions>
           <Button onClick={handleSwitch}>
             {isStravaConfig ? 'User Config' : 'Strava Config'}
           </Button>
-          <Button type="submit">SAVE</Button>
+          {isStravaConfig && hasStrava ? <Button onClick={handleSync}>Sync</Button> : null}
+          <Button type="submit">Update</Button>
         </DialogActions>
       </Dialog>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Snackbar
+        open={resultMessage !== ''}
+        onClose={() => setResultMessage('')}
+        autoHideDuration={3000}
+        message={resultMessage}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
     </React.Fragment>
   );
 }
@@ -54,7 +92,7 @@ const UserInfoConfigContent = ({ userInfo }) => {
         id="avatar"
         name="avatar"
         label="Avatar URL"
-        type="url"
+        type="text"
         margin="dense"
         fullWidth
         variant="outlined"
