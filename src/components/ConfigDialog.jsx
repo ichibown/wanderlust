@@ -31,7 +31,7 @@ const ConfigDialog = ({ open, setOpen }) => {
     setLoading(true);
     if (isStravaConfig) {
       if (data.clientId === '' || data.clientSecret === '') {
-        postStravaSync(userInfo.password, (message) => {
+        postStravaSync(data.password, (message) => {
           setLoading(false);
           setResultMessage(message);
           homeDataState.refreshHomeData();
@@ -152,8 +152,8 @@ const StravaConfigContent = ({ hasStrava }) => {
     <DialogContent>
       <DialogContentText>
         {hasStrava ?
-          <p>Strava configured, leave Client ID and Client Secret empty will trigger data sync.</p> :
-          <p>Strava not configured, go to <Link href="https://www.strava.com/settings/api" target='_blank'>Strava Settings</Link> for Client ID and Client Secret.</p>}
+          <p>Strava Configured. Leave Client ID and Client Secret empty to trigger data sync.</p> :
+          <p>Strava Not Configured. Go to <Link href="https://www.strava.com/settings/api" target='_blank'>Strava Settings</Link> for Client ID and Client Secret.</p>}
       </DialogContentText>
       <TextField
         autoFocus
@@ -177,6 +177,7 @@ const StravaConfigContent = ({ hasStrava }) => {
       />
       <TextField
         autoFocus
+        required
         id="password"
         name="password"
         label="Password"
