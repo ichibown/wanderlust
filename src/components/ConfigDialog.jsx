@@ -96,7 +96,7 @@ const UserInfoConfigContent = ({ userInfo }) => {
         margin="dense"
         fullWidth
         variant="outlined"
-        value={userInfo.avatar}
+        defaultValue={userInfo.avatar}
       />
       <TextField
         autoFocus
@@ -107,7 +107,7 @@ const UserInfoConfigContent = ({ userInfo }) => {
         type="text"
         fullWidth
         variant="outlined"
-        value={userInfo.name}
+        defaultValue={userInfo.name}
       />
       <TextField
         autoFocus
@@ -118,7 +118,7 @@ const UserInfoConfigContent = ({ userInfo }) => {
         type="text"
         fullWidth
         variant="outlined"
-        value={userInfo.motto}
+        defaultValue={userInfo.motto}
       />
       <TextField
         autoFocus
