@@ -100,7 +100,6 @@ const UserInfoConfigContent = ({ userInfo }) => {
   return (
     <DialogContent>
       <TextField
-        autoFocus
         id="avatar"
         name="avatar"
         label="Avatar URL"
@@ -111,7 +110,6 @@ const UserInfoConfigContent = ({ userInfo }) => {
         defaultValue={userInfo.avatar}
       />
       <TextField
-        autoFocus
         id="name"
         name="name"
         label="Site Name"
@@ -122,7 +120,6 @@ const UserInfoConfigContent = ({ userInfo }) => {
         defaultValue={userInfo.name}
       />
       <TextField
-        autoFocus
         id="motto"
         name="motto"
         label="Site Motto"
@@ -133,7 +130,6 @@ const UserInfoConfigContent = ({ userInfo }) => {
         defaultValue={userInfo.motto}
       />
       <TextField
-        autoFocus
         required
         id="password"
         name="password"
@@ -156,7 +152,6 @@ const StravaConfigContent = ({ hasStrava }) => {
           <p>Strava Not Configured. Go to <Link href="https://www.strava.com/settings/api" target='_blank'>Strava Settings</Link> for Client ID and Client Secret.</p>}
       </DialogContentText>
       <TextField
-        autoFocus
         id="clientId"
         name="clientId"
         label="Client ID"
@@ -166,7 +161,6 @@ const StravaConfigContent = ({ hasStrava }) => {
         variant="outlined"
       />
       <TextField
-        autoFocus
         id="clientSecret"
         name="clientSecret"
         label="Client Secret"
@@ -176,7 +170,6 @@ const StravaConfigContent = ({ hasStrava }) => {
         variant="outlined"
       />
       <TextField
-        autoFocus
         required
         id="password"
         name="password"
