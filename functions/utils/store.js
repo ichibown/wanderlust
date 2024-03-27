@@ -38,7 +38,7 @@ export async function getActivitiesMap(context) {
   const result = new Map();
   const activityKeys = await context.env.KV.list({ prefix: 'activities:' });
   for (const key of activityKeys.keys) {
-    const activitiesByKey = await kv.get(key.name, { type: 'json' });
+    const activitiesByKey = await context.env.KV.get(key.name, { type: 'json' });
     result.set(key.name, activitiesByKey);
   }
   return result;
@@ -92,7 +92,7 @@ export async function putActivities(context, rawActivities) {
   }
   for (const [key, activities] of activitiesMap.entries()) {
     if (modifiedKeys.includes(key)) {
-      await kv.put(key, JSON.stringify(activities));
+      await context.env.KV.put(key, JSON.stringify(activities));
     }
   }
   return newActivitiesCount;

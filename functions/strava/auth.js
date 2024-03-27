@@ -53,6 +53,6 @@ export async function onRequestGet(context) {
       status: 500
     });
   }
-  await putStravaConfig(context, configJson.clientId, configJson.clientSecret, refresh_token);
+  await putStravaConfig(context, configJson.clientId, configJson.clientSecret, refreshToken);
   return Response.redirect(context.env.BASE_URL, 303);
 }

@@ -9,10 +9,6 @@ const PASSWORD = "YOUR_PASSWORD"
 
 export default {
 
-  async fetch(request, env, ctx) {
-    return new Response('Hello World!');
-  },
-
   async scheduled(event, env, ctx) {
     ctx.waitUntil(
       fetch(`${BASE_URL}/strava/sync`, {
