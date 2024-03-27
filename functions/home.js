@@ -1,14 +1,13 @@
-const defaultUserConfig = {
-  name: 'Wanderluster',
-  motto: 'Better to run than curse the road.',
-  avatar: '/avatar.jpg',
-};
+import { getStravaConfig, getUserConfig } from "./utils/store";
+
+const supportedTypes = ['Run', 'Ride', 'Hike', 'Walk'];
 
 export async function onRequestGet(context) {
-  const userConfig = await context.env.KV.get('config:user', { type: 'json' });
-  const stravaConfig = await context.env.KV.get('config:strava', { type: 'json' });
+  const userConfig = await getUserConfig(context);
+  const stravaConfig = await getStravaConfig(context);
+
   return Response.json({
-    userInfo: userConfig || defaultUserConfig,
+    userInfo: userConfig,
     hasStrava: stravaConfig !== null && stravaConfig.refreshToken !== null,
     activities: [],
   });

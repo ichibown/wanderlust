@@ -1,3 +1,5 @@
+import { putUserConfig } from "./utils/store";
+
 export async function onRequestPost(context) {
   let body;
   try {
@@ -5,10 +7,6 @@ export async function onRequestPost(context) {
   } catch (e) {
     return new Response('Bad request', { status: 400 });
   }
-  await context.env.KV.put('config:user', JSON.stringify({
-    name: body.name || defaultConfig.name,
-    motto: body.motto || defaultConfig.motto,
-    avatar: body.avatar || defaultConfig.avatar,
-  }));
+  await putUserConfig(context, body.name, body.motto, body.avatar);
   return new Response('Configs updated.');
 }
