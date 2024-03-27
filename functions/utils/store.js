@@ -34,12 +34,31 @@ export async function hasActivities(context) {
   return activityKeys.keys.length > 0;
 }
 
-export async function getActivitiesMap(context) {
+export async function getActivities(context) {
+  const activitiesMap = await getActivitiesMap(context);
+  const result = [];
+  for (const activities of activitiesMap.values()) {
+    result.push(...activities);
+  }
+  return result;
+}
+
+async function getActivitiesMap(context) {
   const result = new Map();
   const activityKeys = await context.env.KV.list({ prefix: 'activities:' });
   for (const key of activityKeys.keys) {
     const activitiesByKey = await context.env.KV.get(key.name, { type: 'json' });
     result.set(key.name, activitiesByKey);
+  }
+  return result;
+}
+
+export async function getActivitiesByType(context, type) {
+  const result = [];
+  const activityKeys = await context.env.KV.list({ prefix: `activities:${type}` });
+  for (const key of activityKeys.keys) {
+    const activitiesByKey = await context.env.KV.get(key.name, { type: 'json' });
+    result.push(...activitiesByKey);
   }
   return result;
 }
