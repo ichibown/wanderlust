@@ -88,6 +88,7 @@ async function mergeAndSaveActivities(kv, activitiesMap, rawActivities) {
   }));
 
   let newActivitiesCount = 0;
+  const modifiedKeys = [];
   for (const activity of newActivities) {
     const type = activity.type;
     const year = new Date(activity.startTimestamp + activity.offsetTimestamp).getFullYear();
@@ -95,16 +96,20 @@ async function mergeAndSaveActivities(kv, activitiesMap, rawActivities) {
     if (!activitiesMap.has(key)) {
       activitiesMap.set(key, [activity]);
       newActivitiesCount++;
+      modifiedKeys.push(key);
     } else {
       const existingActivities = activitiesMap.get(key);
       if (!existingActivities.some(a => a.startTimestamp === activity.startTimestamp)) {
         existingActivities.push(activity);
         newActivitiesCount++;
+        modifiedKeys.push(key);
       }
     }
   }
   for (const [key, activities] of activitiesMap.entries()) {
-    await kv.put(key, JSON.stringify(activities));
+    if (modifiedKeys.includes(key)) {
+      await kv.put(key, JSON.stringify(activities));
+    }
   }
   console.log(`Saved ${newActivitiesCount} new activities.`);
   return newActivitiesCount;
