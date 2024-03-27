@@ -51,3 +51,7 @@ export function postUserConfig(avatar, name, motto, password, onResult) {
 export function getHomeData(onResult) {
   return fetch('/home').then(response => response.json().then(json => onResult(json)));
 }
+
+export function getGeoData(onResult) {
+  return fetch('/geo').then(response => response.json().then(json => onResult(json)));
+}
