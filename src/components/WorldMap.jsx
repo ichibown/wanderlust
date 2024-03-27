@@ -43,6 +43,7 @@ const lineStyle = {
 }
 
 export default function WorldMap() {
+  const [hasAnim, setHasAnim] = useState(true);
   const [geoJson, setGeoJson] = useState({});
   const [viewState, setViewState] = useState({
     latitude: 39.9163447,
@@ -52,6 +53,9 @@ export default function WorldMap() {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (!hasAnim) {
+        return;
+      }
       setViewState(prevState => {
         const newLongitude = prevState.longitude + 1 / Math.pow(2, prevState.zoom);
         const longitude = newLongitude > 180 ? newLongitude - 360 : newLongitude;
@@ -62,7 +66,7 @@ export default function WorldMap() {
       });
     }, 30);
     return () => clearInterval(interval);
-  }, []);
+  }, [hasAnim]);
   useEffect(() => {
     getGeoData((data) => {
       createGeoJsonFromPolylineData(data).then(geoJson => {
@@ -70,12 +74,12 @@ export default function WorldMap() {
       });
     });
   }, []);
-  console.log(geoJson);
   return <Map
     {...viewState}
     style={{ width: '100vw', height: '100vh' }}
     mapboxAccessToken={MAPBOX_TOKEN}
     onMove={evt => setViewState(evt.viewState)}
+    onClick={() => setHasAnim(!hasAnim)}
     mapStyle={MAPBOX_STYLE}>
     <Source id="route-data" type="geojson" data={geoJson}>
       <Layer {...lineStyle} />
