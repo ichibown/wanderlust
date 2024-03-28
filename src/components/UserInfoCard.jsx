@@ -40,7 +40,7 @@ const UserTextContent = ({ name, motto, fontSize, center }) => {
 const UserInfoCard = () => {
   const expandState = useContext(ExpandContext);
   const homeDataState = useContext(HomeDataContext);
-  const userInfo = homeDataState.homeData.userInfo || {};
+  const userInfo = homeDataState.configData.userInfo || {};
   const isExpanded = expandState.isExpanded;
   const [configOpen, setConfigOpen] = React.useState(false);
   const handleAvatarClick = () => {
@@ -67,7 +67,7 @@ const UserInfoCard = () => {
           <Avatar
             alt="avatar"
             src={userInfo.avatar || '/avatar.jpg'}
-            onDoubleClick={handleAvatarClick}
+            onClick={handleAvatarClick}
             sx={{
               width: isExpanded ? '72px' : '32px',
               height: isExpanded ? '72px' : '32px',
@@ -89,7 +89,7 @@ const UserInfoCard = () => {
       <ConfigDialog
         userInfo={userInfo}
         open={configOpen}
-        hasStrava={homeDataState.homeData.hasStrava}
+        hasStrava={homeDataState.configData.hasStrava}
         setOpen={setConfigOpen} />
     </Box>
   );

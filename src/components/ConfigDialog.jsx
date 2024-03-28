@@ -19,8 +19,8 @@ const ConfigDialog = ({ open, setOpen }) => {
   const [isLoading, setLoading] = React.useState(false);
   const [resultMessage, setResultMessage] = React.useState('');
   const homeDataState = useContext(HomeDataContext);
-  const userInfo = homeDataState.homeData.userInfo || {};
-  const hasStrava = homeDataState.homeData.hasStrava;
+  const userInfo = homeDataState.configData.userInfo || {};
+  const hasStrava = homeDataState.configData.hasStrava;
   const handleDialogClose = () => {
     setOpen(false);
   };
@@ -34,20 +34,20 @@ const ConfigDialog = ({ open, setOpen }) => {
         postStravaSync(data.password, (message) => {
           setLoading(false);
           setResultMessage(message);
-          homeDataState.refreshHomeData();
+          homeDataState.refreshConfigData();
         });
       } else {
         postStravaAuth(data.clientId, data.clientSecret, data.password, (message) => {
           setLoading(false);
           setResultMessage(message);
-          homeDataState.refreshHomeData();
+          homeDataState.refreshConfigData();
         });
       }
     } else {
       postUserConfig(data.avatar, data.name, data.motto, data.password, (message) => {
         setLoading(false);
         setResultMessage(message);
-        homeDataState.refreshHomeData();
+        homeDataState.refreshConfigData();
       });
     }
     setOpen(false);
@@ -148,8 +148,8 @@ const StravaConfigContent = ({ hasStrava }) => {
     <DialogContent>
       <DialogContentText>
         {hasStrava ?
-          <p>Strava Configured. Leave Client ID and Client Secret empty to trigger data sync.</p> :
-          <p>Strava Not Configured. Go to <Link href="https://www.strava.com/settings/api" target='_blank'>Strava Settings</Link> for Client ID and Client Secret.</p>}
+          <div>Strava Configured. Leave Client ID and Client Secret empty to trigger data sync.</div> :
+          <div>Strava Not Configured. Go to <Link href="https://www.strava.com/settings/api" target='_blank'>Strava Settings</Link> for Client ID and Client Secret.</div>}
       </DialogContentText>
       <TextField
         id="clientId"

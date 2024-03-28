@@ -1,5 +1,5 @@
 import { fetchStravaAccessToken, fetchStravaActivities } from "../utils/requests";
-import { putActivities, getStravaConfig, hasActivities } from "../utils/store";
+import { putActivities, getStravaConfig, hasActivities, putTimeConfig } from "../utils/store";
 
 /**
  * sync strava activities.
@@ -22,5 +22,8 @@ export async function onRequestPost(context) {
   const hasSynced = await hasActivities(context);
   const rawActivities = await fetchStravaActivities(accessToken, !hasSynced);
   const newActivitiesCount = await putActivities(context, rawActivities);
+  if (newActivitiesCount > 0) {
+    await putTimeConfig(context, new Date().toUTCString());
+  }
   return new Response(`Synced ${newActivitiesCount} new activities.`);
 }

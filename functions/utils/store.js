@@ -29,6 +29,16 @@ export async function getStravaConfig(context) {
   return await context.env.KV.get('config:strava', { type: 'json' });
 }
 
+export async function getTimeConfig(context) {
+  return await context.env.KV.get('config:time', { type: 'json' });
+}
+
+export async function putTimeConfig(context, lastSyncTime) {
+  return await context.env.KV.put('config:time', JSON.stringify({
+    lastSyncTime: lastSyncTime,
+  }));
+}
+
 export async function hasActivities(context) {
   const activityKeys = await context.env.KV.list({ prefix: 'activities:' });
   return activityKeys.keys.length > 0;

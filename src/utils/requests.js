@@ -52,6 +52,6 @@ export function getHomeData(onResult) {
   return fetch('/home').then(response => response.json().then(json => onResult(json)));
 }
 
-export function getGeoData(onResult) {
-  return fetch('/geo').then(response => response.json().then(json => onResult(json)));
+export function getConfigData(onResult) {
+  return fetch('/config').then(response => response.json().then(json => onResult(json)));
 }

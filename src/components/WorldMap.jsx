@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Map, Source, Layer } from 'react-map-gl';
-import { getGeoData } from '../utils/requests';
 import { createGeoJsonFromPolylineData } from '../utils/geojson';
+import { HomeDataContext } from '../App';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiYm93biIsImEiOiJja2gwNWIwZ2QwNHN4MndtdXl3emp0dWFqIn0.4RGtPo5zLG44diQLF_FpnQ';
@@ -43,6 +43,7 @@ const lineStyle = {
 }
 
 export default function WorldMap() {
+  const homeDataContext = useContext(HomeDataContext);
   const [hasAnim, setHasAnim] = useState(true);
   const [geoJson, setGeoJson] = useState({});
   const [viewState, setViewState] = useState({
@@ -67,13 +68,13 @@ export default function WorldMap() {
     }, 30);
     return () => clearInterval(interval);
   }, [hasAnim]);
-  useEffect(() => {
-    getGeoData((data) => {
-      createGeoJsonFromPolylineData(data).then(geoJson => {
+  if (homeDataContext.homeData && homeDataContext.homeData.polylines) {
+    useEffect(() => {
+      createGeoJsonFromPolylineData(homeDataContext.homeData).then(geoJson => {
         setGeoJson(geoJson);
       });
-    });
-  }, []);
+    }, []);
+  }
   return <Map
     {...viewState}
     style={{ width: '100vw', height: '100vh' }}

@@ -4,26 +4,28 @@ import DashboardContaienr from "./components/DashboardContainer";
 import UserInfoCard from "./components/UserInfoCard";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import { Box } from '@mui/material';
-import { getHomeData } from './utils/requests';
+import { getConfigData, getHomeData } from './utils/requests';
 
 export const ExpandContext = createContext();
 export const HomeDataContext = createContext();
 
 function App() {
   const [isExpanded, setExpand] = useState(false);
+  const [configData, setConfigData] = useState({});
   const [homeData, setHomeData] = useState({});
   const handleIconClick = () => {
     setExpand(!isExpanded);
   }
-  const refreshHomeData = () => {
-    getHomeData((data) => { setHomeData(data); });
+  const refreshConfigData = () => {
+    getConfigData((data) => { setConfigData(data); });
   }
   useEffect(() => {
-    refreshHomeData();
+    refreshConfigData();
+    getHomeData((data) => { setHomeData(data); });
   }, []);
   return (
     <ExpandContext.Provider value={{ isExpanded, setExpand }}>
-      <HomeDataContext.Provider value={{ homeData, refreshHomeData }}>
+      <HomeDataContext.Provider value={{ configData, refreshConfigData, homeData }}>
         <WorldMap />
         <DashboardContaienr>
           <Box
