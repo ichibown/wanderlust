@@ -68,13 +68,15 @@ export default function WorldMap() {
     }, 30);
     return () => clearInterval(interval);
   }, [hasAnim]);
-  if (homeDataContext.homeData && homeDataContext.homeData.polylines) {
-    useEffect(() => {
-      createGeoJsonFromPolylineData(homeDataContext.homeData).then(geoJson => {
-        setGeoJson(geoJson);
-      });
-    }, []);
-  }
+  const polylines = homeDataContext.homeData && homeDataContext.homeData.polylines;
+  useEffect(() => {
+    if (!polylines) {
+      return;
+    }
+    createGeoJsonFromPolylineData(polylines).then(geoJson => {
+      setGeoJson(geoJson);
+    });
+  }, [polylines]);
   return <Map
     {...viewState}
     style={{ width: '100vw', height: '100vh' }}
