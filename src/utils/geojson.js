@@ -1,6 +1,6 @@
 export function createGeoJsonFromPolylineData(polylineData) {
   return new Promise((resolve, reject) => {
-    const features = polylineData.map((data) => {
+    const lineFeatures = polylineData.map((data) => {
       const coordinates = decodePolyline(data.polyline);
       return {
         type: 'Feature',
@@ -14,11 +14,10 @@ export function createGeoJsonFromPolylineData(polylineData) {
         },
       };
     });
-    const geoJson = {
+    resolve({
       type: 'FeatureCollection',
-      features: features,
-    };
-    resolve(geoJson);
+      features: lineFeatures,
+    });
   });
 }
 

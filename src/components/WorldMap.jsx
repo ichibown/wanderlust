@@ -8,38 +8,47 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoiYm93biIsImEiOiJja2gwNWIwZ2QwNHN4MndtdXl3emp0dWF
 const MAPBOX_STYLE = 'mapbox://styles/bown/clmq6a7q804sk01phh67e8szi';
 
 const lineStyle = {
-  id: 'routes',
+  id: 'lines',
   type: 'line',
-  source: 'routes',
+  minzoom: 10,
+  maxzoom: 22,
   paint: {
     "line-color": "#24c789",
-    "line-opacity": [
-      "match",
-      [
-        "get",
-        "congestion"
-      ],
-      [
-        "heavy",
-        "severe"
-      ],
-      0.5,
-      1
-    ],
     "line-width": [
       "interpolate",
-      [
-        "linear"
-      ],
-      [
-        "zoom"
-      ],
-      0,
-      3,
-      22,
-      1
-    ]
+      ["linear"],
+      ["zoom"],
+      0, 6, 22, 2
+    ],
+    "line-opacity": 1,
+    "line-blur": 1
   }
+}
+
+const heatmaptyle = {
+  id: 'areas',
+  type: 'heatmap',
+  minzoom: 0,
+  maxzoom: 10,
+  paint: {
+    "heatmap-color": [
+      "interpolate",
+      ["linear"],
+      ["heatmap-density"],
+      0, "rgba(0, 0, 255, 0)",
+      0.1, "royalblue",
+      0.3, "cyan",
+      0.5, "lime",
+      0.7, "yellow",
+      1, "#24c789"
+    ],
+    "heatmap-radius": [
+      "interpolate",
+      ["linear"],
+      ["zoom"],
+      0, 15, 22, 2
+    ]
+  },
 }
 
 export default function WorldMap() {
@@ -84,8 +93,11 @@ export default function WorldMap() {
     onMove={evt => setViewState(evt.viewState)}
     onClick={() => setHasAnim(!hasAnim)}
     mapStyle={MAPBOX_STYLE}>
-    <Source id="route-data" type="geojson" data={geoJson}>
+    <Source id="lines" type="geojson" data={geoJson}>
       <Layer {...lineStyle} />
+    </Source>
+    <Source id="aeras" type="geojson" data={geoJson}>
+      <Layer {...heatmaptyle} />
     </Source>
   </Map>;
 }
