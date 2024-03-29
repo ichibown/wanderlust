@@ -3,8 +3,9 @@ import WorldMap from "./components/WorldMap";
 import DashboardContaienr from "./components/DashboardContainer";
 import UserInfoCard from "./components/UserInfoCard";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
-import { Box } from '@mui/material';
 import { getConfigData, getHomeData } from './utils/requests';
+import DataCards from './components/DataCards';
+import { Box } from '@mui/material';
 
 export const ExpandContext = createContext();
 export const HomeDataContext = createContext();
@@ -32,16 +33,18 @@ function App() {
             sx={{
               display: 'flex',
               flexDirection: 'row',
-              justifyContent: 'space-between',
+              justifyContent: 'normal',
             }}>
             <UserInfoCard />
-            <ExpandMoreRoundedIcon sx={{
-              width: '24px',
-              height: '24px',
-              margin: '18px 12px 0 0',
-              rotate: isExpanded ? '180deg' : '0deg',
-              transition: 'rotate 0.3s',
-            }}
+            <DataCards />
+            <ExpandMoreRoundedIcon
+              sx={{
+                width: '24px',
+                height: '24px',
+                margin: '18px 12px 0 0',
+                rotate: isExpanded ? '180deg' : '0deg',
+                transition: 'rotate 0.3s',
+              }}
               onClick={handleIconClick} />
           </Box>
         </DashboardContaienr>

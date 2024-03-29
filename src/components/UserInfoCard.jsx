@@ -71,7 +71,7 @@ const UserInfoCard = () => {
             sx={{
               width: isExpanded ? '72px' : '32px',
               height: isExpanded ? '72px' : '32px',
-              margin: isExpanded ? '8px 0 8px 72px' : '0',
+              margin: isExpanded ? '8px 0 8px 50px' : '0',
               transition: 'width 0.3s, height 0.3s, margin 0.3s',
             }} />
           <UserTextContent
