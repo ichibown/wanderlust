@@ -8,8 +8,8 @@ export async function onRequestGet(context) {
   }
   const activities = await getActivities(context);
   const polylines = activities.map((activity) => ({
-    platform: activity.platform,
-    platformId: activity.platformId,
+    key: activity.platform + activity.platformId,
+    desc: `${activity.name ?? activity.type} ${(activity.distance / 1000).toFixed(2)}km\n${new Date(activity.startTimestamp + activity.offsetTimestamp).toISOString().split('T')[0]}`,
     polyline: activity.polyline,
   }));
 

@@ -5,8 +5,8 @@ export function createGeoJsonFromPolylineData(polylineData) {
       return {
         type: 'Feature',
         properties: {
-          platform: data.platform,
-          platformId: data.platformId,
+          key: data.key,
+          desc: data.desc,
         },
         geometry: {
           type: 'LineString',

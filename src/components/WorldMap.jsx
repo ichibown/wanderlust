@@ -18,11 +18,36 @@ const lineStyle = {
       "interpolate",
       ["linear"],
       ["zoom"],
-      0, 6, 22, 2
+      0, 10, 22, 6
     ],
     "line-opacity": 1,
     "line-blur": 1
   }
+}
+
+const symbolStyle = {
+  "id": "symbols",
+  "type": "symbol",
+  "minzoom": 13,
+  "maxzoom": 22,
+  "paint": {
+    "text-color": "#ffffff",
+    "text-opacity": 0.9
+  },
+  "layout": {
+    "text-field": "{desc}",
+    "text-font": [
+      "Open Sans ExtraBold",
+      "Arial Unicode MS Regular"
+    ],
+    "text-max-width": 30,
+    "text-size": [
+      "interpolate",
+      ["linear"],
+      ["zoom"],
+      0, 24, 22, 16
+    ],
+  },
 }
 
 const heatmaptyle = {
@@ -46,7 +71,7 @@ const heatmaptyle = {
       "interpolate",
       ["linear"],
       ["zoom"],
-      0, 15, 22, 2
+      0, 10, 22, 2
     ]
   },
 }
@@ -95,6 +120,9 @@ export default function WorldMap() {
     mapStyle={MAPBOX_STYLE}>
     <Source id="lines" type="geojson" data={geoJson}>
       <Layer {...lineStyle} />
+    </Source>
+    <Source id="symbols" type="geojson" data={geoJson}>
+      <Layer {...symbolStyle} />
     </Source>
     <Source id="aeras" type="geojson" data={geoJson}>
       <Layer {...heatmaptyle} />
