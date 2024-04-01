@@ -45,7 +45,7 @@ const symbolStyle = {
       "interpolate",
       ["linear"],
       ["zoom"],
-      0, 24, 22, 16
+      0, 18, 22, 12
     ],
   },
 }
