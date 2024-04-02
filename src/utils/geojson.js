@@ -6,6 +6,7 @@ export function createGeoJsonFromPolylineData(polylineData) {
         type: 'Feature',
         properties: {
           key: data.key,
+          type: data.type,
           desc: data.desc,
         },
         geometry: {

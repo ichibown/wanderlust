@@ -13,7 +13,28 @@ const lineStyle = {
   minzoom: 10,
   maxzoom: 22,
   paint: {
-    "line-color": "#24c789",
+    "line-color": [
+      "case",
+      [
+        "match",
+        ["get", "type"],
+        ["Run"],
+        true, false
+      ], "#24c789",
+      [
+        "match",
+        ["get","type"],
+        ["Ride"],
+        true,false
+      ], "#d1e792",
+      [
+        "match",
+        ["get","type"],
+        ["Hike"],
+        true,false
+      ], "#80b8ef",
+      "#24c789"
+    ],
     "line-width": [
       "interpolate",
       ["linear"],
