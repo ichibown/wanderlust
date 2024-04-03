@@ -4,7 +4,6 @@ import { createGeoJsonFromPolylineData } from '../utils/geojson';
 import { HomeDataContext } from '../App';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiYm93biIsImEiOiJja2gwNWIwZ2QwNHN4MndtdXl3emp0dWFqIn0.4RGtPo5zLG44diQLF_FpnQ';
 const MAPBOX_STYLE = 'mapbox://styles/bown/clmq6a7q804sk01phh67e8szi';
 
 const lineStyle = {
@@ -135,7 +134,7 @@ export default function WorldMap() {
   return <Map
     {...viewState}
     style={{ width: '100vw', height: '100vh' }}
-    mapboxAccessToken={MAPBOX_TOKEN}
+    mapboxAccessToken={import.meta.env.VITE_MAPBOX_TOKEN}
     onMove={evt => setViewState(evt.viewState)}
     onClick={() => setHasAnim(!hasAnim)}
     mapStyle={MAPBOX_STYLE}>

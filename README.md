@@ -3,8 +3,9 @@ Explore the world on foot.
 
 ### 部署
 #### 前置条件
-- 运动数据同步 [Strava](https://www.strava.com/dashboard)。
+- 数据在 [Strava](https://www.strava.com/dashboard)。
 - 已注册 [Cloudflare](https://dash.cloudflare.com/)。
+- 已注册 [Mapbox](https://account.mapbox.com/)。
  
 #### 部署 Cloudflare Pages
 - [Fork](https://github.com/ichibown/wanderlust/fork) 本项目。
@@ -17,7 +18,9 @@ Explore the world on foot.
   - 在 **Settings - Environment variables** 中添加两个环境变量：
     - `BASE_URL`：上一步分配的二级域名 `https://your-domain.pages.dev`。
     - `PASSWORD`：自定义的访问密码。
+    - `MAPBOX_TOKEN`：[Mapbox](https://account.mapbox.com/) 中的 Access Token。
   - 在 **Settings - Functions** 中找到 **KV namespace bindings**，名称填 `KV`，并选择上一步创建的 KV 存储域绑定。
+  - 在 **Settings - Builds & Deployments** 中找到 **Build configurations**，确保 **Build command** 为 `VITE_MAPBOX_TOKEN=$MAPBOX_TOKEN npm run build`，**Build output directory** 为 `dist`。
   - 在 **Deployments** 找到最近一次部署，点击 `···` 中的 `Retry Deployment` 重新部署使配置生效。
 
 #### 用户信息自定义 & 绑定 Strava
