@@ -39,9 +39,9 @@ const lineStyle = {
       "interpolate",
       ["linear"],
       ["zoom"],
-      0, 10, 22, 6
+      0, 8, 22, 4
     ],
-    "line-opacity": 1,
+    "line-opacity": 0.8,
     "line-blur": 1
   }
 }
